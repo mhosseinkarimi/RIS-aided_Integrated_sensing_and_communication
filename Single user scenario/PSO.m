@@ -9,11 +9,14 @@ function [x, fval, exitflag, output] = PSO(P, simParams)
         "SwarmSize", simParams.SwarmSize, "FunctionTolerance", ...
         simParams.PSOTol, "MaxStallIterations", 20, "UseParallel", true);   % pso options
 
-    % multi-objective problem formulation
-    alpha = simParams.commCoeff;   % communiaction objective coeffitient
-    beta = simParams.locCoeff;  % localization objective coeffitien
-    ObjFunc = @(phi) -alpha*AchievableRate(diag(exp(1i*phi)), P, simParams) + beta*PEB(diag(exp(1i*phi)), P, simParams);
-
+    if simParams.objFcnMethod == "penalty"
+        ObjFunc = @(phi) PEB(diag(exp(1i*phi)), P, simParams) + Penalty(diag(exp(1i*phi)), P, simParams);
+    elseif simParams.objFcnMethod == "weightedSum"
+        % multi-objective problem formulation
+        alpha = simParams.commCoeff;   % communiaction objective coeffitient
+        beta = simParams.locCoeff;  % localization objective coeffitien
+        ObjFunc = @(phi) -alpha*AchievableRate(diag(exp(1i*phi)), P, simParams) + beta*PEB(diag(exp(1i*phi)), P, simParams);
+    end
     % running PSO
     [x, fval, exitflag, output] = particleswarm(ObjFunc, nvars,lb, ub, options);
 end
