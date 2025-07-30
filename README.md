@@ -154,12 +154,4 @@ This forces the PSO particles to search within feasible regions that meet the re
 - Weighted-sum methods are prone to **imbalanced trade-offs**, especially at high SNRs  
 - Optimized RIS phases significantly outperform random and constant phase configurations
 
----
 
-## Future Work
-
-- Extend to **multi-user** ISAC scenarios with realistic resource constraints  
-- Apply **machine learning** for RIS optimization in imperfect CSI conditions  
-- Conduct **experimental validation** and test with real-world hardware
-
----
